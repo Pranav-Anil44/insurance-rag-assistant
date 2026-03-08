@@ -119,9 +119,6 @@ Deploy the RAG system as a web service
 ---
 
 # Author
-Pranav Anil  
-AI / Machine Learning Enthusiast  
+Pranav A Kumar
 Transitioning from Mainframe Production Support to AI Engineering
-Pranav Anil  
-AI / Machine Learning Enthusiast  
-Transitioning from Mainframe Production Support to AI Engineering
+
