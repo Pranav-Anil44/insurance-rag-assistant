@@ -1,124 +1,75 @@
-# insurance-rag-assistant
+Insurance RAG Assistant (FastAPI + FAISS)
 
+A Retrieval-Augmented Generation (RAG) system built to answer questions from insurance data using semantic search and LLMs.
 
-This project implements a **Retrieval-Augmented Generation (RAG)** system to answer insurance-related questions using claim records as the knowledge base.
+Project Overview
 
-The system retrieves relevant information using **vector similarity search (FAISS)** and generates answers using a **Large Language Model (LLM)**.
+This project started as a notebook-based experiment and was upgraded into a FastAPI application, simulating a real-world AI system.
 
-# Project Objective
+It retrieves relevant data using vector search and generates structured answers using an LLM, with additional post-processing to improve reliability.
 
-The goal of this project is to demonstrate how **RAG pipelines can combine document retrieval with language models** to produce accurate and context-aware responses.
-This approach is widely used in **enterprise AI assistants and knowledge retrieval systems**.
+System Architecture
 
----
+User Query
+→ Embedding (Sentence Transformers)
+→ FAISS Vector Search
+→ Context Cleaning & Deduplication
+→ LLM Generation (FLAN-T5)
+→ Post-processing (Rule-based filtering)
+→ Final Structured Answer
 
-# RAG Workflow
+⚙️ Key Features
+Semantic search using Sentence Transformers
+FAISS vector database for fast retrieval
+LLM-based response generation
+Context cleaning and deduplication
+Rule-based post-processing for reliable output
+FastAPI backend for real-time interaction
+API Usage
 
-Insurance Claim Records  
-↓  
-Convert Structured Data to Text  
-↓  
-Chunk Documents  
-↓  
-Generate Embeddings  
-↓  
-Store Embeddings in FAISS Vector Index  
-↓  
-Retrieve Relevant Context  
-↓  
-LLM Generates Final Answer  
+Run the server:
 
----
+uvicorn app.main:app --reload
 
-# Project Structure
+Open Swagger UI:
+http://127.0.0.1:8000/docs
 
-### Data Preparation
+Endpoint
 
-`row_to_text.ipynb`
+POST /ask
 
-Converts structured insurance claim records into text format suitable for NLP processing.
+Example Request
+{
+  "question": "What occupations are associated with higher claim amounts?"
+}
+Example Response
+{
+  "answer": "- Occupation: Engineer"
+}
+⚠️ Limitations
+RAG is not suitable for numerical analytics (e.g., averages, max values)
+Results depend heavily on data quality
+Uses lightweight local models for inference
 
----
+🧠 Key Learnings
+LLM outputs require control and validation
+Data formatting significantly impacts RAG performance
+RAG is strong for semantic understanding but weak for aggregation
+Post-processing improves reliability in real-world systems
 
-### Document Chunking
+🚀 Future Improvements
+Docker containerization
+Cloud deployment
+Monitoring and logging
+Evaluation metrics
+Hybrid system (RAG + SQL analytics)
 
-`chunk_record.ipynb`
+ Tech Stack
+Python
+FastAPI
+FAISS
+Sentence Transformers
+Hugging Face Transformers
 
-Splits long documents into smaller chunks to improve semantic search performance.
-
----
-
-### Embedding Generation
-
-`generate_embeddings.ipynb`
-
-Generates vector embeddings using **Sentence Transformers**.
-
----
-
-### Vector Search with FAISS
-
-`FAISS_index_and_retreival.ipynb`
-
-Creates a FAISS vector index and retrieves the most relevant document chunks for a given query.
-
----
-
-### RAG Pipeline
-
-`rag_with_llm.ipynb`
-
-Implements the final **Retrieval-Augmented Generation pipeline** combining vector retrieval with an LLM to answer questions.
-
----
-
-# Dataset
-
-`insurance_claims_records.txt`
-
-Sample insurance claim records used as the knowledge base for the RAG system.
-
----
-
-# Stored Embeddings
-
-`insurance_embedding.npy`
-
-Precomputed embeddings used to build the FAISS vector index.
-
----
-
-# Technologies Used
-
-Python  
-FAISS (Facebook AI Similarity Search)  
-Sentence Transformers  
-Transformers  
-NumPy  
-Jupyter Notebook  
-
----
-
-# Example Query
-
-Example question that can be asked to the system:
-"What are the most common reasons for insurance claims?"
-
-
-The system retrieves the most relevant claim records and generates a contextual response.
-
----
-
-# Future Improvements
-
-Convert notebook pipeline into reusable Python modules
-Add FastAPI backend for real-time question answering
-Add Streamlit UI for interactive queries
-Deploy the RAG system as a web service
-
----
-
-# Author
+Author
 Pranav A Kumar
-Transitioning from Mainframe Production Support to AI Engineering
-
